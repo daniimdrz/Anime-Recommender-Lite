@@ -1,0 +1,3 @@
+build-essential
+g++
+libatlas-base-dev
