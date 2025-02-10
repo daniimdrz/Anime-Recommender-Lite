@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Anime Recommender</h1>
+        
+        <!-- Formulario para ingresar el nombre del anime -->
+        <form id="anime-form">
+            <label for="anime-title">Enter the title of an anime:</label>
+            <input type="text" id="anime-title" name="anime-title" placeholder="Ex. Naruto" required>
+            <div id="autocomplete-container"></div>
+            <button type="submit">Get recommendations</button>
+        </form>
+
+        
+
+        <!-- Sección de recomendaciones -->
+        <div id="recommendations-container" style="display: none;">
+            <h2>Recommendations:</h2>
+            <div id="anime-list" class="recommendations"></div>
+            
+        </div>
+
+        <!-- Detalles de la recomendación seleccionada -->
+        <div id="selected-anime-container" style="display: none;">
+            <h2 id="selected-anime-title"></h2>
+            <img id="selected-anime-image" src="" alt="" width="200">
+            <p id="selected-anime-rating"></p>
+            <p id="selected-anime-episodes"></p>
+            <p id="selected-anime-synopsis"></p>
+            <button id="back-button">Back to recommendations</button>
+        </div>
+    </div>
+
+    <!-- Cargamos el JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

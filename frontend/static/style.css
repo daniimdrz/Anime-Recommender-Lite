@@ -1,0 +1,362 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('/static/images/fondo.jpg');
+    background-size: cover;  /* Esto asegura que la imagen cubra toda la pantalla */
+    background-position: center center; /* Centra la imagen */
+    background-attachment: fixed; /* Hace que la imagen quede fija cuando se hace scroll */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    margin-bottom: 30vh;
+}
+
+.container {
+    position: absolute;
+    top: 20vh; /* o el valor que necesites */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+
+h1 {
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 60%;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0a0a0a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+#recommendations-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Contenedor principal donde se muestran las recomendaciones */
+#anime-list {
+    display: flex;                /* Usamos flexbox para alinear las tarjetas */
+    flex-wrap: wrap;              /* Permitimos que las tarjetas se envuelvan si no caben */
+    gap: 20px;                    /* Espaciado entre las tarjetas */
+    justify-content: center;      /* Centrado de las tarjetas */
+    overflow: auto;               /* Añadimos un scroll horizontal si las tarjetas exceden el tamaño */
+    padding: 10px;                /* Un poco de padding dentro del contenedor */
+    box-sizing: border-box;       /* Aseguramos que el padding no afecte el ancho */
+}
+
+
+.recommendations {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 tarjetas en una fila */
+    gap: 20px;
+    width: 100%;
+}
+
+/* Estilos para las recomendaciones (tarjetas) */
+.recommendation {
+    text-align: center;           /* Centra el contenido */
+    width: 200px;                 /* Ancho fijo para las tarjetas */
+    margin: 10px;                 /* Espaciado entre las tarjetas */
+    border: 1px solid #ddd;       /* Borde suave */
+    padding: 10px;                /* Espaciado interno */
+    background-color: #f9f9f9;    /* Fondo claro */
+    border-radius: 8px;           /* Bordes redondeados */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+    transition: transform 0.2s ease-in-out; /* Animación al pasar el mouse */
+    box-sizing: border-box;       /* Para que el padding no aumente el tamaño total */
+}
+
+/* Estilo para la imagen de los animes */
+.anime-image {
+    width: 150px;               /* Tamaño de la imagen */
+    height: auto;               /* Mantiene la proporción de la imagen */
+    border-radius: 5px;         /* Bordes redondeados para la imagen */
+    margin-bottom: 10px;        /* Espacio debajo de la imagen */
+}
+
+/* Estilo para el título del anime */
+.anime-title {
+    font-size: 16px;            /* Tamaño de fuente para el título */
+    font-weight: bold;          /* Fuente en negrita */
+    margin-bottom: 5px;         /* Espacio debajo del título */
+}
+
+/* Estilo para el rating */
+.anime-rating {
+    font-size: 14px;            /* Tamaño de fuente para el rating */
+    color: #888;                /* Color gris para el texto del rating */
+}
+
+.recommendation:hover {
+    transform: scale(1.05);      /* Efecto de aumentar tamaño al pasar el mouse */
+}
+
+.recommendation img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.recommendation h3 {
+    font-size: 20px;
+    margin-top: 10px;
+    color: #333;
+}
+
+.recommendation .rating,
+.recommendation .episodes {
+    font-size: 14px;
+    color: #888;
+    margin-top: 5px;
+}
+
+.recommendation .description {
+    display: none;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.recommendation .toggle-description {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #5c6bc0;
+    cursor: pointer;
+}
+
+.recommendation:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+
+#selected-anime-container {
+    text-align: center;
+    max-width: 800px;
+    padding: 30px;
+    background: linear-gradient(135deg, #ffffff, #f0f0f0);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    margin-top: 20px;
+    margin: 20px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilo para el título del anime */
+#selected-anime-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+
+/* Estilo para la imagen */
+#selected-anime-image {
+    width: 220px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para el rating y episodios */
+#selected-anime-rating,
+#selected-anime-episodes {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Estilo para la sinopsis */
+#selected-anime-synopsis {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+    max-width: 90%;
+    text-align: justify;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin:auto;
+}
+
+/* Botón de volver */
+#back-button {
+    padding: 12px 24px;
+    background-color: #0a0a0a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background 0.3s ease-in-out;
+}
+
+#back-button:hover {
+    background-color: #333;
+    transform: scale(1.05);
+}
+
+/* Contenedor de sugerencias */
+/* Contenedor de sugerencias */
+#autocomplete-container {
+    display: flex;                   /* Usamos flexbox para alinear las cards en una fila */
+    flex-wrap: nowrap;                /* No se permite el salto de línea */
+    gap: 10px;                        /* Reducimos el espacio entre las cards */
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;                      /* Hace que el contenedor ocupe todo el ancho disponible */
+    max-width: 100%;                  /* Evita que se desborde */
+    justify-content: space-between;   /* Distribuye las cards de manera equitativa */
+    position: relative;
+    overflow-x: auto;                 /* Permite desplazamiento horizontal si es necesario */
+    
+}
+
+/* Regla para los elementos dentro del contenedor autocomplete */
+/* Estilos para las cards de autocompletado */
+#autocomplete-container .autocomplete-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    width: 150px;  /* Ancho de la tarjeta */
+    border-radius: 8px;  /* Esquinas redondeadas */
+    overflow: hidden;  /* Asegura que la imagen no sobresalga de la tarjeta */
+    background-color: #f9f9f9;  /* Fondo claro para la tarjeta */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);  /* Sombra debajo de la tarjeta */
+    transition: transform 0.2s ease-in-out;  /* Efecto al hacer hover */
+}
+
+/* Estilo para la imagen dentro del autocompletado */
+#autocomplete-container .autocomplete-item img {
+    width: 150px;  /* Ancho de la imagen */
+    height: calc(150px * 1.25);  /* Proporción 4:5 para la altura */
+    object-fit: cover;  /* La imagen mantiene la proporción sin distorsionarse */
+    margin-bottom: 10px;  /* Espacio entre la imagen y el título */
+}
+
+
+/* Estilo para el título dentro del autocompletado */
+#autocomplete-container .autocomplete-item .autocomplete-title {
+    font-size: 14px;                  /* Tamaño de fuente similar a las recomendaciones */
+    color: #333;                      /* Color oscuro para el título */
+    font-weight: bold;
+    margin-top: 10px;                 /* Espacio por encima del título */
+}
+
+
+/* Hover: efecto de aumento y sombra */
+#autocomplete-container .autocomplete-item:hover {
+    transform: scale(1.05);  /* Efecto de hover para hacer la card un poco más grande */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);  /* Sombra más fuerte al hacer hover */
+}
+
+@media (max-width: 768px) {
+    #autocomplete-container .autocomplete-item {
+        width: calc(50% - 10px);  /* En pantallas más pequeñas, los elementos ocuparán el 50% */
+    }
+
+    #autocomplete-container .autocomplete-item .autocomplete-title {
+        display: block;          /* Se asegura que el elemento sea de bloque */
+        width: 100%;             /* Ocupa todo el ancho del contenedor */
+        white-space: nowrap;     /* Evita saltos de línea */
+        overflow: hidden;        /* Oculta el texto que sobrepase el ancho */
+        text-overflow: ellipsis; /* Agrega puntos suspensivos al final */
+    }
+    
+    #autocomplete-container .autocomplete-item img {
+        width: 120px;  /* Ajuste del tamaño de las imágenes para pantallas medianas */
+    }
+}
+
+@media (max-width: 480px) {
+    #autocomplete-container .autocomplete-item {
+        width: 100%;  /* En pantallas muy pequeñas, los elementos ocuparán el 100% */
+    }
+
+    #autocomplete-container .autocomplete-item .autocomplete-title {
+        display: block;          /* Se asegura que el elemento sea de bloque */
+        width: 100%;             /* Ocupa todo el ancho del contenedor */
+        white-space: nowrap;     /* Evita saltos de línea */
+        overflow: hidden;        /* Oculta el texto que sobrepase el ancho */
+        text-overflow: ellipsis; /* Agrega puntos suspensivos al final */
+    }
+
+    #autocomplete-container .autocomplete-item img {
+        width: 100px;  /* Ajuste del tamaño de las imágenes para pantallas pequeñas */
+    }
+}
+
+
+.autocomplete-item {
+    display: flex; /* Cambia esto a flex si no estaba ya */
+    flex-direction: column; /* Para que la imagen esté encima del texto */
+    align-items: center; /* Centra los elementos dentro del item */
+    cursor: pointer;
+    width: 100px; /* Fija un tamaño para cada item */
+}
+
+.autocomplete-item img {
+    width: 80px; /* Ajusta el tamaño de la imagen */
+    height: auto;
+    margin-bottom: 5px; /* Espaciado entre la imagen y el título */
+}
+
+.autocomplete-title {
+    font-size: 12px;
+    text-align: center;
+}
+
+
